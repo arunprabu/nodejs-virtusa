@@ -1,0 +1,20 @@
+
+Node Js Ecosystem
+=====
+    Npmjs.com 
+
+
+    iOS, and Android 
+    ====
+        AppStore / Play => Apps 
+    
+    NodeJS
+    ====
+        Npmjs.com => Packages 
+        Every NodeJs project will have package.json 
+
+
+    Chrome Browser 
+    ====
+        Webstore => Extensions
+
