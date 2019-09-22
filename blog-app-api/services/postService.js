@@ -29,6 +29,17 @@ exports.getPostById = (id, callback) => {
             console.log(data);
         }
         callback(err, data);
-    })
+    });
 }
 
+exports.updatePost = (id, newPostData, callback ) => {
+    console.log( id);
+    Post.updateOne( { postId: id }, newPostData, (err, data) => {
+        if(!err){
+            console.log(data);
+        }
+        callback(err, data);
+    });
+}
+
+//Todo: Delete Post

@@ -15,7 +15,7 @@ var Post = new Schema({
     updatedBy : String,
     updatedOn : {type: Date, default: Date.now},
     isActive: Boolean
-});
+}, { strict: false });  // in order to capture unstructured data you can go with flexible schema
 
 Post.plugin(autoIncrement.plugin, {model: 'Post', field: 'postId', startAt: 1});
 module.exports = mongoose.model('Post', Post);

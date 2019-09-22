@@ -1,0 +1,56 @@
+Step 0:
+    npm install passport passport-local express-session express-jwt jsonwebtoken 
+
+Step 1
+    Setup router for auth and add service for it
+    router/auth.js 
+    services/authService.js 
+
+Step 2:
+    Work on post method. 
+    Endpoints to listen are 'signup' and 'login'
+
+Step 3: 
+    get the data and send it to service 
+    Then, work on registration flow 
+
+Step 4 
+    Work on Passport Config
+
+Step5 
+    Write the util methods to do with hash
+
+Step6 
+    in app.js final config for passport is needed
+    after view engine, 
+    
+    app.use(passport.initialize());
+    app.use(passport.session())
+
+
+and after express static path
+
+app.use(session({
+  secret: 'thesecret',
+  saveUninitialized: false,
+  resave: false
+}))
+
+var jwt = require('express-jwt');
+var auth = jwt({
+  secret: 'MY_SECRET',
+  userProperty: 'payload'
+});
+
+=====
+Sidenotes
+----
+In services inside signup method, you can also generate temp password  -- Ref 
+//https://github.com/arunprabu/contact-mgr-api/blob/master/services/authService.js
+//generate password
+//var generator = require('generate-password');
+ //generate temp password 
+  // var _tempPassword = generator.generate({
+  //                                         length: 14,
+  //                                         numbers: true
+  //                                       });

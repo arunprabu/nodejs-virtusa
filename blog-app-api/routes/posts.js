@@ -15,24 +15,15 @@ router.post('/', ( req, res ) => {
       res.json(err);
     }
   });
-
-  
-  
-   
-
 })
 
 
-/* POST post creation */
-router.post('/', ( req, res ) =>{
-  console.log( req.body);
+/* GET post details. listening on URL params */
+router.get('/', function(req, res, next) {
 
-  //2. send the data to service method 
-  postService.addPost(req.body, function( err, data ) {
-    //3. get the resp from services
+  postService.getPosts((err, data) => {
     console.log(data);
     if (!err) { 
-      //4. send it to the rest client
       res.json(data);
     } else {
       res.json(err);
@@ -42,10 +33,11 @@ router.post('/', ( req, res ) =>{
 });
 
 /* GET post details. listening on URL params */
-router.get('/:id', function(req, res, next) {
+router.get('/:postId', function(req, res, next) {
   
-  console.log(req.params.id);
-  postService.getPostById(req.params.id, (err, data) => {
+  console.log(req.params.postId);
+  //Todo: this should become util method because used in put method callback also
+  postService.getPostById(req.params.postId, (err, data) => {
     console.log(data);
     if (!err) { 
       res.json(data);
@@ -53,28 +45,33 @@ router.get('/:id', function(req, res, next) {
       res.json(err);
     }
   });
-
 });
+
 
 /* PUT blog posts */
-router.put('/1', (req, res) => {
+router.put('/:postId', (req, res) => {
   console.log(req.body);
 
-  //static json data 
-  // #1 way: send saved successfully alone
-  res.json( { status: "Saved Successfully!", code: 200});
-  
-  console.log(res);
+  postService.updatePost(req.params.postId, req.body, (err, data) => {
+    console.log(data);
+    if (!err) { 
+      //Todo: this should become util method
+      postService.getPostById( req.params.postId,  (err, data ) => {
+        console.log(data);
+          if (!err) { 
+            res.json(data);
+          }else {
+            res.json(err);
+          }
+      });
+    } else {
+      res.json(err);
+    }
+  });
 
-  // #2 way: send the updated data 
-  // res.json({  id: 1, 
-  //     title: "iphone 11 introduced",
-  //     body: "apple launching new iphone...",
-  //     category: 'Mobile'
-  // });
 });
 
-
+/* Todo: Delete */ 
 router.delete('/1', (req, res) => {
   console.log(req);
   //sending status of delete 
