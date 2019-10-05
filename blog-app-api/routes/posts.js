@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var postService = require('../services/postService'); //1. connect to service 
 
+//for routes protection -- based on extracting token from req header
+var authUtil = require('./util/authUtil');
+
+
 router.post('/', ( req, res ) => {
   console.log(req.body);
 
@@ -72,7 +76,7 @@ router.put('/:postId', (req, res) => {
 });
 
 /* Todo: Delete */ 
-router.delete('/1', (req, res) => {
+router.delete('/1', authUtil.required, (req, res) => {
   console.log(req);
   //sending status of delete 
   res.json( { status: "Deleted Successfully!", code: 200});

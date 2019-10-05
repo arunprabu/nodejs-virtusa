@@ -1,5 +1,7 @@
 var User = require("../models/user");
-
+//generate password
+//var generator = require('generate-password');
+//var sgMail = require('@sendgrid/mail');
 var passport = require('passport');
 
 exports.signup = ( userData, callback ) => {
@@ -9,8 +11,14 @@ exports.signup = ( userData, callback ) => {
 
     var userDao = new User(userData);
 
+    //generate temp password 
+    // var _tempPassword = generator.generate({
+    //   length: 14,
+    //   numbers: true
+    // });
+
     //to create salt and hash for the p/w
-    userDao.setPassword(userData.password); 
+    //userDao.setPassword(userData.password); 
     console.log(userDao);
 
     //in case if you make the schema as non-strict - because password is coming from routes
@@ -18,6 +26,19 @@ exports.signup = ( userData, callback ) => {
     userDao.save((err, savedUser) => {
         // 4.After Saving the records, send email with a temp password or else with a link to verify email
         // But, we are not sending email, instead let the user login with a password
+        
+        // the following is optional
+        // sgMail.setApiKey("<your api key>");
+        // const msg = {
+        //   to: 'test@example.com',
+        //   from: 'test@example.com',
+        //   subject: 'Sending with Twilio SendGrid is Fun',
+        //   text: 'and easy to do anywhere, even with Node.js',
+        //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+        // };
+        // sgMail.send(msg);
+
+
           if (!err) {
               console.log(`User registered successfully with userId:${savedUser.userId}`);
           }

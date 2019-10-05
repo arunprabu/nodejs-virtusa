@@ -31,4 +31,8 @@ router.post('/login', ( req, res ) => {
   
 });
 
+// '/verify' 
+// '/reset'
+
+
 module.exports = router;
